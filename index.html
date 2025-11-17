@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown to Tech Brian’s Birthday</title>
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Dancing+Script:wght@700&family=Montserrat+Alternates&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            background: #000;
+            transition: background 0.8s ease;
+        }
+        video.background-video {
+            position: fixed;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -2;
+            filter: brightness(0.65);
+            will-change: transform;
+        }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: -1;
+            transition: background 0.8s ease;
+            pointer-events: none;
+        }
+        #splash {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+            z-index: 100;
+            animation: splashFade 5.5s forwards;
+        }
+        @keyframes splashFade {
+            0% { opacity: 1; }
+            85% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        #splash img {
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            border: 10px solid #0ff;
+            box-shadow: 0 0 30px #0ff, 0 0 60px #f0f;
+            animation: neonFloat 4s ease-in-out infinite;
+            will-change: transform, box-shadow;
+        }
+        @keyframes neonFloat {
+            0%, 100% { transform: translateY(0); box-shadow: 0 0 30px #0ff, 0 0 60px #f0f; }
+            50% { transform: translateY(-20px); box-shadow: 0 0 50px #0ff, 0 0 90px #ff0; }
+        }
+        #splash h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8em;
+            background: linear-gradient(90deg, #0ff, #ff0, #f0f, #0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 3s ease-in-out infinite;
+            margin: 15px 0;
+        }
+        @keyframes titleGlow {
+            0%, 100% { filter: brightness(1) hue-rotate(0deg); }
+            50% { filter: brightness(1.4) hue-rotate(180deg); }
+        }
+        #main {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            height: 100vh;
+            overflow-y: auto;
+            will-change: transform;
+        }
+        #countdown {
+            font-size: 4em;
+            font-weight: 700;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, #0ff, #ff0, #f0f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0,255,255,0.8);
+            animation: countdownPulse 2s ease-in-out infinite;
+            will-change: text-shadow;
+        }
+        @keyframes countdownPulse {
+            0%, 100% { text-shadow: 0 0 30px #0ff; }
+            50% { text-shadow: 0 0 60px #f0f, 0 0 90px #ff0; }
+        }
+        #encouragement {
+            max-width: 90%;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border: 6px solid;
+            border-image: linear-gradient(45deg, #0ff, #f0f) 1;
+            border-radius: 10px;
+            background: rgba(0,255,255,0.05);
+            font-family: 'Montserrat Alternates', sans-serif;
+            font-size: 2em;
+            text-align: center;
+            animation: borderDance 6s linear infinite;
+            backdrop-filter: blur(5px);
+        }
+        @keyframes borderDance {
+            0% { border-image-source: linear-gradient(45deg, #0ff, #f0f); }
+            50% { border-image-source: linear-gradient(45deg, #ff0, #0f0); }
+            100% { border-image-source: linear-gradient(45deg, #0ff, #f0f); }
+        }
+        .contact-section a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px; height: 60px;
+            top: 60px;
+            margin: 0 12px;
+            font-size: 2em;
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid #0ff;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #0ff;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            will-change: transform, box-shadow;
+        }
+        .contact-section a:hover {
+            transform: translateY(-10px) scale(1.2);
+            box-shadow: 0 0 40px #0ff, 0 0 60px #f0f;
+        }
+        #surprise-btn {
+            padding: 14px 32px;
+            font-size: 1.3em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #f00, #f80);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 30px #f00;
+            animation: buttonGlow 2.5s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+        @keyframes buttonGlow {
+            0%, 100% { box-shadow: 0 0 30px #f00; }
+            50% { box-shadow: 0 0 50px #f80, 0 0 70px #ff0; }
+        }
+        footer {
+            margin-top: auto;
+            padding: 15px;
+            font-size: 1.2pxem;
+            background: linear-gradient(90deg, transparent, rgba(0,255,255,0.2), transparent);
+            animation: footerShine 8s linear infinite;
+        }
+        @keyframes footerShine {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Ultra-smooth snowflakes using JS + CSS */
+        .snowflake {
+            position: fixed;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.9;
+            box-shadow: 0 0 10px #0ff;
+            will-change: transform;
+        }
+
+        /* Responsive perfection */
+        @media (max-width: 480px) {
+            #countdown { font-size: 2.5em; }
+            #splash h1 { font-size: 2.2em; }
+            #encouragement { font-size: 1em; }
+            .contact-section a { width: 50px; height: 50px; font-size: 1.6em; }
+        }
+        @media (min-width: 481px) and (max-width: 768px) {
+            #countdown { font-size: 3.2em; }
+        }
+    </style>
+</head>
+<body class="dark">
+    <video class="background-video" autoplay loop muted playsinline>
+        <source src="https://files.catbox.moe/bs9a82.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+
+    <!-- Splash Screen -->
+    <div id="splash">
+        <img src="https://files.catbox.moe/90r1g5.jpg" alt="Tech Brian">
+        <h1>Celebrating Tech Brian — Born to Code</h1>
+        <p>24th JAN 2006 — Counting down to greatness…</p>
+    </div>
+
+    <!-- Main App -->
+    <div id="main">
+      <p id="message" style="font-family:'Satisfy'"><marquee><h2>🎃🪄GREATE COUNTDOWN⏰ TO BRIAN'S BIGEST MOMENT✨🎈</h2></marquee></p>
+
+        <div id="countdown">00 : 00 : 00 : 00</div>
+        <p id="message" style="font-family:'Dancing Script';font-size:1.6em;margin:10px;">
+            Get ready to wish Tech Brian the biggest birthday ever!
+        </p>
+        <p id="encouragement">
+            Keep pushing your limits, Tech Brian! Your passion for coding lights up the world like neon in the night. You're destined for greatness! Keep shining, king! 🚀✨
+        </p>
+
+        <div class="contact-section">
+            <h2 style="margin:20px 0 10px;">Say Hi to Brian!</h2>
+            <a href="https://wa.me/254748950572" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="mailto:bridah888@gmail.com"><i class="fas fa-envelope"></i></a>
+            <a href="tel:+254748950572"><i class="fas fa-phone"></i></a>
+        </div>
+
+        <div class="info-box" style="background:rgba(255,255,255,0.08);border-radius:20px;padding:20px;margin:20px;max-width:90%;">
+            <img src="https://files.catbox.moe/530bbs.jpg" alt="Tech Brian" style="border-radius:50%;width:110px;box-shadow:0 0 30px #0ff;">
+            <p><strong>Name:</strong> Tech Brian</p>
+            <p><strong>DOB:</strong> 24/01/2006</p>
+            <p><strong>Hobbies:</strong> Coding, AI, Design</p>
+            <p style="font-style:italic;">“Tech isn’t just my skill. It’s my heartbeat.”<br>*Happy Birthday, Tech Brian!*  
+On this coming 24th Jan, the code of your life compiles with no errors, runs at max speed, and glows brighter than RGB LEDs! 💻⚡🧠  
+May your systems stay bug-free, your projects go viral, and your network of happiness stay strong!  
+👻💀🎃 Just because it's you… even Halloween spirits came early to debug your day with fun!  
+
+🕸️💾 Wishing you loads of RAM (Real Awesome Moments),  
+Plenty of bandwidth for love & joy,  
+And zero data loss in your memories. 🎈🤖🧡
+
+From all your tech worlds:  
+“System Log: Tech Brian's Level Up — Successful✅"<br>Lots of love to <strong>Queen Merab💍💫</strong></p>
+        </div>
+
+        <button id="music-toggle"><h2><i class="fas fa-music">Play/Pause</h2></i></button>
+
+        <footer>© Tech Brian — Powered by Merab 🐇 | Built with endless love</footer>
+    </div>
+
+    <audio id="bgmusic" src="https://files.catbox.moe/5k3bpf.m4a" loop preload="auto"></audio>
+
+    <script>
+        // Show main after splash
+        setTimeout(() => {
+            document.getElementById('splash').style.display = 'none';
+            document.getElementById('main').style.display = 'flex';
+            createSnowflakes();
+        }, 3500);
+
+        // Ultra-smooth countdown
+        function updateCountdown() {
+            const now = new Date();
+            const nextBirthday = new Date(now.getFullYear(), 1, 24);
+            if (nextBirthday < now) nextBirthday.setFullYear(nextBirthday.getFullYear() + 1);
+            const diff = nextBirthday - now;
+            const d = Math.floor(diff / 86400000).toString().padStart(2, '0');
+            const h = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
+            const m = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+            const s = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+            document.getElementById('countdown').textContent = `${d} : ${h} : ${m} : ${s}`;
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Theme toggle
+        const themes = ['dark', 'light', 'snowy'];
+        let idx = 0;
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            document.body.classList.remove(...themes);
+            idx = (idx + 1) % themes.length;
+            document.body.classList.add(themes[idx]);
+            this.textContent = themes[idx] === 'light' ? '🌞' : themes[idx] === 'snowy' ? '❄️' : '🌙';
+        });
+
+        // Music toggle
+        const audio = document.getElementById('bgmusic');
+        document.getElementById('music-toggle').addEventListener('click', () => {
+            audio.paused ? audio.play() : audio.pause();
+            this.innerHTML = audio.paused ? '<i class="fas fa-music"></i>' : '<i class="fas fa-pause"></i>';
+        });
+
+        // Surprise
+        document.getElementById('surprise-btn').addEventListener('click', () => {
+            alert("Surprise launched! Brian just received your love explosion! 🎉✨");
+        });
+
+        // Smooth snowflakes (60fps)
+        function createSnowflakes() {
+            for (let i = 0; i < 40; i++) {
+                const flake = document.createElement('div');
+                flake.classList.add('snowflake');
+                flake.style.left = Math.random() * 100 + 'vw';
+                flake.style.width = flake.style.height = Math.random() * 8 + 4 + 'px';
+                flake.style.animationDuration = Math.random() * 12 + 8 + 's';
+                flake.style.animationDelay = Math.random() * 5 + 's';
+                flake.style.opacity = Math.random() * 0.7 + 0.3;
+                document.body.appendChild(flake);
+            }
+        }
+
+        // Register SW
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
