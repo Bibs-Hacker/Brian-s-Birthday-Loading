@@ -1,0 +1,15 @@
+{
+  "short_name": "Brian Birthday",
+  "name": "Countdown to Tech Brian’s Birthday",
+  "icons": [
+    {
+      "src": "https://files.catbox.moe/530bbs.jpg",
+      "type": "image/jpeg",
+      "sizes": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
